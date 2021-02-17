@@ -1,6 +1,12 @@
 # django-hallo-app
 
-Чтобы запустить сервер выполните 
+Установите зависимости командой
+
+```bash
+pip install -r requirements.txt
+```
+
+Чтобы запустить сервер выполните:
 
 ```bash
 ./manage.py runserver
