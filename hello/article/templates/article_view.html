@@ -1,17 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Future article:</h1>
-    <h2>{{ title }} </h2>
-    <p>{{ content }}</p>
-    <p>By: {{ author }}</p>
-
-    {% for key, value in user.items %}
-        <p><strong>{{ key }}:</strong> {{ value }}</p>
-    {% endfor %}
+    <a href="/">view article list</a>
+    <br>
+    <br>
+    <h1>Article {{ article.id }}</h1>
+    <p>Title: {{ article.title }}</p>
+    <p>Author: {{ article.author }}</p>
+    <p>Content: {{ article.content }}</p>
 </body>
 </html>
