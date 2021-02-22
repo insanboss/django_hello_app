@@ -4,7 +4,11 @@ from article.models import Article
 
 
 def index_view(request):
-    return render(request, 'index.html')
+    """
+    Представление для отображения списка статей
+    """
+    articles = Article.objects.all()  # Получаем список статей из базы данных
+    return render(request, 'index.html', context={'articles': articles})  # Возвращаем "скомпилированный" шаблон с использованием переданного списка статей
 
 
 def home_view(request):

@@ -11,9 +11,13 @@
 </head>
 <body>
 <div class="container">
-    <p>This is my first Django project!</p>
-    <p>Hello World!</p>
-    <img src="{% static "img/Smiley.svg" %}" alt="">
+    <h1>Articles</h1>
+    {% for article in articles %}  {# Перебираем список статей циклом #}
+        {# Создаём абзац, в котором отображем автора статьи и заголовок статьи, обёрнутый в ссылку, #}
+        {# которая ведёт на страницу статьи #}
+        <p>{{ article.author }}: <a href="/articles/{{ article.id }}">{{ article.title }}</a></p>
+    {% endfor %}
+
 </div>
 </body>
 </html>
