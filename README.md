@@ -1,11 +1,38 @@
 # django-hallo-app
 
-Установите python версии 3.8 и выше. Найти инструкцию вы можете по ссылке https://python.org
+Для запуска проекта установите python версии 3.7 и выше, pip и virualenv
+
+Поссле клонирования перейдите в склонированную папку и вывполните следующие команды:
+
+Создайте виртуальное окружение командой
+```bash
+python3 -m virtualenv -p python3 venv
+```
+
+Активируйте виртуальное окружение командой
+```bash
+source venv/bin/activate
+```
+
+Перейдите в папку hello:
+```bash
+cd hello
+```
 
 Установите зависимости командой
 
 ```bash
 pip install -r requirements.txt
+```
+
+Примените миграции командой
+```bash
+./manage.py migrate
+```
+
+Загрузите фикстурные статьи командой
+```bash
+./manage.py loaddata fixtures/articles.json
 ```
 
 Чтобы запустить сервер выполните:
@@ -14,4 +41,3 @@ pip install -r requirements.txt
 ./manage.py runserver
 ```
 
-any text
