@@ -1,0 +1,57 @@
+[
+{
+  "model": "article.article",
+  "pk": 1,
+  "fields": {
+    "title": "Заголовок статьи 1",
+    "content": "Контент нашей первой статьи",
+    "author": "Автор",
+    "created_at": "2021-02-22T14:10:25.751Z",
+    "updated_at": "2021-02-22T14:11:32.454Z"
+  }
+},
+{
+  "model": "article.article",
+  "pk": 2,
+  "fields": {
+    "title": "Заголовок статьи 2",
+    "content": "Контент нашей второй статьи",
+    "author": "Автор2",
+    "created_at": "2021-02-22T14:10:25.751Z",
+    "updated_at": "2021-02-22T14:11:32.454Z"
+  }
+},
+{
+  "model": "article.article",
+  "pk": 3,
+  "fields": {
+    "title": "Заголовок статьи 3",
+    "content": "Контент нашей третьей статьи",
+    "author": "Автор",
+    "created_at": "2021-02-22T14:10:25.751Z",
+    "updated_at": "2021-02-22T14:11:32.454Z"
+  }
+},
+{
+  "model": "article.article",
+  "pk": 4,
+  "fields": {
+    "title": "Заголовок статьи 4",
+    "content": "Контент нашей четвёртой статьи",
+    "author": "Автор3",
+    "created_at": "2021-02-22T14:10:25.751Z",
+    "updated_at": "2021-02-22T14:11:32.454Z"
+  }
+}
+{
+  "model": "article.article",
+  "pk": 5,
+  "fields": {
+    "title": "Заголовок статьи 5",
+    "content": "Контент нашей пятой статьи",
+    "author": "Автор3",
+    "created_at": "2021-02-22T14:10:25.751Z",
+    "updated_at": "2021-02-22T14:11:32.454Z"
+  }
+}
+]
