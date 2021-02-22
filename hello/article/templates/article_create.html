@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Create Article</h1>
-<form action="/webapp/add/" method="post">
+<form action="/articles/add/" method="post">
     {% csrf_token %}
     <label>Title:</label><br/>
     <input type="text" name="title"/><br/>

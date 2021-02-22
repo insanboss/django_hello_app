@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from webapp.models import Article
+from article.models import Article
 
 
 def index_view(request):
