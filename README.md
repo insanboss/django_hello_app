@@ -35,9 +35,18 @@ pip install -r requirements.txt
 ./manage.py loaddata fixtures/articles.json
 ```
 
+Загрузите пользователей командой
+```bash
+./manage.py loaddata fixtures/users.json
+```
+
 Чтобы запустить сервер выполните:
 
 ```bash
 ./manage.py runserver
 ```
+
+Для доступа в панель администратора перейдите по ссылке http://localhost:8000/admin
+
+Username для администратора из фикстур: `admin`, пароль: `admin`
 
