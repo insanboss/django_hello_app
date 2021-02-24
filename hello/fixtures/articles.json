@@ -42,7 +42,7 @@
     "created_at": "2021-02-22T14:10:25.751Z",
     "updated_at": "2021-02-22T14:11:32.454Z"
   }
-}
+},
 {
   "model": "article.article",
   "pk": 5,
