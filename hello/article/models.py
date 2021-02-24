@@ -6,7 +6,7 @@ from django.db import models
 class Article(models.Model):
     title = models.CharField(max_length=120, null=False, blank=False)
     content = models.TextField(max_length=3000, null=False, blank=False)
-    author = models.CharField(max_length=150, null=False, blank=False)
+    author = models.CharField(max_length=150, null=False, blank=False, default='Anon')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
