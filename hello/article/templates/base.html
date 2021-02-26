@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Новостной портал номер [-1] в мире{% endblock title %}</title>
+</head>
+<body>
+    {% include "navigation.html" %}
+    <h1>Лучшие статьи в мире!</h1>
+    {% block content %}{% endblock content %}
+</body>
+</html>
