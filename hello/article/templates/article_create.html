@@ -4,14 +4,6 @@
 
 {% block content %}
     <form action="/articles/add/" method="post">
-        {% csrf_token %}
-        <label>Title:</label><br/>
-        <input type="text" name="title"/><br/>
-        <label>Text:</label><br/>
-        <textarea name="content"></textarea><br/>
-        <label>Author:</label><br/>
-        <input type="text" name="author"/><br/>
-        <br/>
-        <input type="submit" value="Send"/>
+        {% include "article_form.html" with button_text="Создать статью" %}
     </form>
 {% endblock content %}
