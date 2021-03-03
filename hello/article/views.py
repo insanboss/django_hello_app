@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 from article.models import Article
-from article.forms import ArticleForm
+from article.forms import ArticleForm, ArticleDeleteForm
 
 
 def index_view(request):
@@ -61,7 +61,7 @@ def article_update_view(request, pk):
             article.save()
             return redirect('article-view', pk=article.id)  # после сохранения статьи перенаправим на страницу просмотра статьи
 
-        return render(request, 'article_create.html', context={'form': form, 'article': article})  # если форма не валидна - отобразим форму с ошибками
+        return render(request, 'article_update.html', context={'form': form, 'article': article})  # если форма не валидна - отобразим форму с ошибками
 
 
 def article_delete_view(request, pk):
@@ -71,8 +71,16 @@ def article_delete_view(request, pk):
     article = get_object_or_404(Article, id=pk)  # получаем статью
 
     if request.method == 'GET':  # если метод запроса GET - отобразим форму для подтверждения удаления статьи
-        return render(request, 'article_delete.html', context={'article': article})
+        form = ArticleDeleteForm()
+        return render(request, 'article_delete.html', context={'article': article, 'form': form})
     elif request.method == 'POST':  # если метод запроса POST - удалим статью и перенаправим на страницу списка статей
-        article.delete()
-        return redirect('article-list')
+        form = ArticleDeleteForm(data=request.POST)
+        if form.is_valid():
+            if form.cleaned_data['title'] != article.title:
+                form.errors['title'] = ['Названия статей не совпадают']
+                return render(request, 'article_delete.html', context={'article': article, 'form': form})
+
+            article.delete()
+            return redirect('article-list')
+        return render(request, 'article_delete.html', context={'article': article, 'form': form})
 
