@@ -10,3 +10,8 @@ class ArticleForm(forms.Form):
     title = forms.CharField(max_length=120, required=True, label='Заголовок')
     content = forms.CharField(max_length=3000, required=True, widget=widgets.Textarea, label='Контент')
     author = forms.CharField(max_length=150, required=True, label='Автор')
+
+
+class ArticleDeleteForm(forms.Form):
+    title = forms.CharField(max_length=120, required=True, label='Введите название статьи, чтобы удалить её')
+
