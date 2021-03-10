@@ -1,23 +1,40 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import View, TemplateView, RedirectView
 
 from article.models import Article
 from article.forms import ArticleForm, ArticleDeleteForm
 
 
-def index_view(request):
+class IndexView(TemplateView):
     """
-    Представление для отображения списка статей
+    Представление для просмотра списка статей. Представление реализовано с
+    использованием generic-представления TemplateView.
+
+    Поскольку метод get уже реализован в TemplateView, нам остаётся только указать
+    название шаблона, который мы будем использовать в свойстве класса template_name и
+    переопределить метод получения контекста get_context_data, для того, чтобы передать
+    QuerySet со статьями в шаблон
     """
-    articles = Article.objects.all()  # Получаем список статей из базы данных
-    return render(request, 'index.html', context={'articles': articles})  # Возвращаем "скомпилированный" шаблон с использованием переданного списка статей
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['articles'] = Article.objects.all()
+        return super().get_context_data(**kwargs)
 
 
-def article_view(request, pk):  # параметр из URL передаётся в kwargs представления
+class ArticleView(TemplateView):
     """
-    Представление для отображение одной статьи
+    Представление для отображения детального просмотра статьи. Как и прдставление IndexView -
+    данное прдставление реализовано на основе generic - представления TemplateView.
+
+    Переопределяем метод get_context_data для того, чтобы передать в шаблон статью и template_name,
+    для того, чтобы указать какой шаблон будет отрендерен
     """
-    article = get_object_or_404(Article, id=pk)  # Получаем статью с помощью шотката джанго. если статья с указанным id не будет найдена - будет вывброшена ошибка 404
-    return render(request, 'article_view.html', context={'article': article})
+    template_name = 'article_view.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['article'] = get_object_or_404(Article, id=kwargs.get('pk'))
+        return super().get_context_data(**kwargs)
 
 
 def article_create_view(request):
