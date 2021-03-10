@@ -26,11 +26,11 @@ class Article(BaseModel):
 
 
 class Comment(BaseModel):
-    article = models.ForeignKey(
-        'article.Article',
-        on_delete=models.CASCADE,
-        related_name='comments',
-        verbose_name='Статья',
+    article = models.ForeignKey(  # Поле - внешний ключ
+        'article.Article',  # Указываем на какую модель создаём внешний ключ
+        on_delete=models.CASCADE,  # указываем какая стратегия будет выбрана при удалении объекта связанной модели
+        related_name='comments',  # указываем названия аттрибута, который будет добавлен к связанной модели (можем обращаться article.comments)
+        verbose_name='Статья',  # имя, которое будет отображаться в панели администратора
         null=False,
         blank=False
     )
