@@ -1,5 +1,5 @@
 from django.contrib import admin
-from article.models import Article, Tag
+from article.models import Article, Tag, Comment
 
 # Register your models here.
 
@@ -20,5 +20,14 @@ class TagAdmin(admin.ModelAdmin):
     readonly_fields = ['id', 'created_at', 'updated_at']
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'article', 'comment', 'author', 'created_at', 'updated_at']
+    list_filter = ['article', 'author']
+    search_fields = ['article', 'comment', 'author']
+    fields = ['id', 'article', 'comment', 'author', 'created_at', 'updated_at']
+    readonly_fields = ['id', 'created_at', 'author', 'updated_at']
+
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Comment, CommentAdmin)
