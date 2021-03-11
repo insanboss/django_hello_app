@@ -47,11 +47,13 @@ def article_create_view(request):
     elif request.method == "POST":  # Если метод запроса POST - создаём статью и редиректим клиента
         form = ArticleForm(data=request.POST)  # Создадим объект формы, в него передадим данные из формы, которые пришли от клиента
         if form.is_valid():  # если форма валидна - создаётся статья и клиент редиректится
+            tags = form.cleaned_data.get('tags')
             article = Article.objects.create(
                 title=form.cleaned_data.get('title'),
                 content=form.cleaned_data.get('content'),
                 author=form.cleaned_data.get('author')
             )
+            article.tags.set(tags)
             return redirect('article-view', pk=article.id)  # Перенаправляем клиента на страницуу детального просмотра статьи
         return render(request, 'article_create.html', context={'form': form})  # если форма не валидна - отобразим форму с ошибками
 
@@ -76,6 +78,7 @@ def article_update_view(request, pk):
             article.content = form.cleaned_data.get("content")
             article.author = form.cleaned_data.get("author")
             article.save()
+            article.tags.set(form.cleaned_data.get("tags"))
             return redirect('article-view', pk=article.id)  # после сохранения статьи перенаправим на страницу просмотра статьи
 
         return render(request, 'article_update.html', context={'form': form, 'article': article})  # если форма не валидна - отобразим форму с ошибками
