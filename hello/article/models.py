@@ -21,6 +21,11 @@ class Article(BaseModel):
         through='article.ArticleTag',
         through_fields=('article', 'tag')
     )
+    tags = models.ManyToManyField(
+        'article.Tag',
+        related_name='articles_new',
+        db_table='article_tags'
+    )
 
     class Meta:
         db_table = 'articles'
