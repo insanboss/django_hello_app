@@ -64,8 +64,7 @@ class Tag(BaseModel):
 
 class ArticleTag(models.Model):
     article = models.ForeignKey('article.Article', on_delete=models.CASCADE)
-    article_old = models.ForeignKey('article.Article', on_delete=models.CASCADE, related_name='old_tags', null=True)
     tag = models.ForeignKey('article.Tag', on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'articel_tags'
+        db_table = 'articel_tags_old'
