@@ -12,4 +12,5 @@
     <p>Title: {{ article.title }}</p>
     <p>Author: {{ article.author }}</p>
     <p>Content: {{ article.content }}</p>
+    <p>Tags: {% for tag in article.tags.all %}{{ tag.tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 {% endblock content %}
