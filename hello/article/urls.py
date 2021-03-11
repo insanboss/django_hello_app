@@ -9,7 +9,7 @@ from article.views import (
 )
 
 urlpatterns = [
-    path('', IndexRedirectView.as_view(), name='article-list'),  # URL для отображения списка статей
+    path('', IndexView.as_view(), name='article-list'),  # URL для отображения списка статей
     path('add/', article_create_view, name='article-add'),  # URL для отображения формы и создания статьи
     path('<int:pk>/', ArticleView.as_view(), name='article-view'),  # URL для просмотра деталей статьи. Обратите внимание, URL использует целочисленный параметр id
     path('<int:pk>/update', article_update_view, name='article-update'),  # URL для отображения формы и редактирования статьи
