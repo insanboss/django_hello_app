@@ -30,6 +30,11 @@ pip install -r requirements.txt
 ./manage.py migrate
 ```
 
+Загрузите фикстурные теги командой
+```bash
+./manage.py loaddata fixtures/tags.json
+```
+
 Загрузите фикстурные статьи командой
 ```bash
 ./manage.py loaddata fixtures/articles.json
@@ -49,4 +54,3 @@ pip install -r requirements.txt
 Для доступа в панель администратора перейдите по ссылке http://localhost:8000/admin
 
 Username для администратора из фикстур: `admin`, пароль: `admin`
-
