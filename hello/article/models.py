@@ -15,7 +15,7 @@ class Article(BaseModel):
     title = models.CharField(max_length=120, null=False, blank=False, verbose_name='Заголовок')
     content = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Контент')
     author = models.CharField(max_length=150, null=False, blank=False, default='Anon', verbose_name='Автор')
-    tags = models.ManyToManyField(
+    tags_old = models.ManyToManyField(
         'article.Tag',
         related_name='articles',
         through='article.ArticleTag',
