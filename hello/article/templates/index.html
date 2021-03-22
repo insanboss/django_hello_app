@@ -9,6 +9,8 @@
 {% block content %}
     {% if not articles %}
         <h2>НЕТ СТАТЕЙ</h2>
+    {% else %}
+        {% include "partial/search_form.html" %}
     {% endif %}
 
     {% for article in articles %}  {# Перебираем список статей циклом #}
@@ -16,4 +18,5 @@
         {# которая ведёт на страницу статьи #}
         <p>{{ article.author }}: <a href="{% url "article-view" article.id %}">{{ article.title }}</a></p>
     {% endfor %}
+    {% include 'partial/paginate.html' %}
 {% endblock content %}
