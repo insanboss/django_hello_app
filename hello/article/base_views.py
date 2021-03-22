@@ -19,7 +19,6 @@ class CustomFormView(View):
             return self.form_valid(form)
         return self.form_invalid(form)
 
-
     def form_valid(self, form):
         return redirect(self.redirect_url)
 

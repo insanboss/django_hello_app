@@ -15,3 +15,7 @@ class ArticleForm(forms.ModelForm):
 
 class ArticleDeleteForm(forms.Form):
     title = forms.CharField(max_length=120, required=True, label='Введите название статьи, чтобы удалить её')
+
+
+class SearchForm(forms.Form):
+    search_value = forms.CharField(max_length=100, required=False, label='Найти')
