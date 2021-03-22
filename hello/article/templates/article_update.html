@@ -5,6 +5,6 @@
 
 {% block content %}
     <form action="{% url "article-update" article.id %}" method="post">
-        {% include "article_form.html" with button_text="Редактировать статью" %}
+        {% include "partial/form.html" with button_text="Редактировать статью" %}
     </form>
 {% endblock content %}
