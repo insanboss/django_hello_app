@@ -11,7 +11,13 @@ class BaseModel(models.Model):
 
 
 class Article(BaseModel):
-    title = models.CharField(max_length=120, null=False, blank=False, verbose_name='Заголовок', validators=(MinLengthValidator(5),))
+    title = models.CharField(
+        max_length=120,
+        null=False,
+        blank=False,
+        verbose_name='Заголовок',
+        validators=(MinLengthValidator(5),)
+    )
     content = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Контент')
     author = models.CharField(max_length=150, null=False, blank=False, default='Anon', verbose_name='Автор')
     tags = models.ManyToManyField(
@@ -30,11 +36,11 @@ class Article(BaseModel):
 
 
 class Comment(BaseModel):
-    article = models.ForeignKey(  # Поле - внешний ключ
-        'article.Article',  # Указываем на какую модель создаём внешний ключ
-        on_delete=models.CASCADE,  # указываем какая стратегия будет выбрана при удалении объекта связанной модели
-        related_name='comments',  # указываем названия аттрибута, который будет добавлен к связанной модели (можем обращаться article.comments)
-        verbose_name='Статья',  # имя, которое будет отображаться в панели администратора
+    article = models.ForeignKey(
+        'article.Article',
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Статья',
         null=False,
         blank=False
     )
@@ -45,6 +51,9 @@ class Comment(BaseModel):
         db_table = 'comments'
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+    
+    def __str__(self):
+        return f'{self.author}: {self.comment}'
 
 
 class Tag(BaseModel):
