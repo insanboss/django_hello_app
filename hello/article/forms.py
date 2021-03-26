@@ -1,6 +1,6 @@
 from django import forms
 
-from article.models import Article
+from article.models import Article, Comment
 
 
 class ArticleForm(forms.ModelForm):
@@ -15,6 +15,12 @@ class ArticleForm(forms.ModelForm):
 
 class ArticleDeleteForm(forms.Form):
     title = forms.CharField(max_length=120, required=True, label='Введите название статьи, чтобы удалить её')
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author', 'comment')
 
 
 class SearchForm(forms.Form):
