@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, FormView, ListView
+from django.views.generic import FormView, ListView, CreateView, DetailView
 from django.urls import reverse
 from django.db.models import Q
 from django.utils.http import urlencode
 
 from article.models import Article
 from article.forms import ArticleForm, ArticleDeleteForm, SearchForm
-
-from article.base_views import CustomFormView
 
 
 class IndexView(ListView):
@@ -17,7 +15,7 @@ class IndexView(ListView):
 
     В представлении активирована пагинация и реализован поиск
     """
-    template_name = 'index.html'
+    template_name = 'articles/index.html'
     model = Article
     context_object_name = 'articles'
     ordering = ('title', '-created_at')
@@ -55,25 +53,15 @@ class IndexView(ListView):
         return context
 
 
-class ArticleView(TemplateView):
-    """
-    Представление для отображения детального просмотра статьи. Как и прдставление IndexView -
-    данное прдставление реализовано на основе generic - представления TemplateView.
-
-    Переопределяем метод get_context_data для того, чтобы передать в шаблон статью и template_name,
-    для того, чтобы указать какой шаблон будет отрендерен
-    """
-    template_name = 'article_view.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['article'] = get_object_or_404(Article, id=kwargs.get('pk'))
-        return super().get_context_data(**kwargs)
+class ArticleView(DetailView):
+    model = Article
+    template_name = 'articles/view.html'
 
 
-class CreateArticleView(CustomFormView):
-    template_name = 'article_create.html'
+class CreateArticleView(CreateView):
+    template_name = 'articles/create.html'
     form_class = ArticleForm
-    redirect_url = 'article-list'
+    model = Article
 
     def form_valid(self, form):
         tags = form.cleaned_data.pop('tags')
@@ -85,11 +73,14 @@ class CreateArticleView(CustomFormView):
         article.tags.set(tags)
 
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('article-list')
 
 
 class ArticleUpdateView(FormView):
     form_class = ArticleForm
-    template_name = 'article_update.html'
+    template_name = 'articles/update.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.article = self.get_object()
@@ -132,14 +123,14 @@ def article_delete_view(request, pk):
 
     if request.method == 'GET':  # если метод запроса GET - отобразим форму для подтверждения удаления статьи
         form = ArticleDeleteForm()
-        return render(request, 'article_delete.html', context={'article': article, 'form': form})
+        return render(request, 'articles/delete.html', context={'article': article, 'form': form})
     elif request.method == 'POST':  # если метод запроса POST - удалим статью и перенаправим на страницу списка статей
         form = ArticleDeleteForm(data=request.POST)
         if form.is_valid():
             if form.cleaned_data['title'] != article.title:
                 form.errors['title'] = ['Названия статей не совпадают']
-                return render(request, 'article_delete.html', context={'article': article, 'form': form})
+                return render(request, 'articles/delete.html', context={'article': article, 'form': form})
 
             article.delete()
             return redirect('article-list')
-        return render(request, 'article_delete.html', context={'article': article, 'form': form})
+        return render(request, 'articles/delete.html', context={'article': article, 'form': form})
