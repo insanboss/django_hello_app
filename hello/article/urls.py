@@ -3,10 +3,10 @@ from django.urls import path
 from article.views import (
     IndexView,
     ArticleView,
-    article_delete_view,
     CreateArticleView,
     ArticleUpdateView,
-    ArticleCommentCreate
+    ArticleCommentCreate,
+    ArticleDeleteView
 )
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
     path('add/', CreateArticleView.as_view(), name='article-add'),
     path('<int:pk>/', ArticleView.as_view(), name='article-view'),
     path('<int:pk>/update', ArticleUpdateView.as_view(), name='article-update'),
-    path('<int:pk>/delete', article_delete_view, name='article-delete'),
-    path('<int:pk>/commnets/add/', ArticleCommentCreate.as_view(), name='article-commnet-create')
+    path('<int:pk>/delete', ArticleDeleteView.as_view(), name='article-delete'),
+    path('<int:pk>/comments/add/', ArticleCommentCreate.as_view(), name='article-commnet-create')
 ]

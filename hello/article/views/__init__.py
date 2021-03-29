@@ -3,7 +3,7 @@ from article.views.articles import (
     ArticleView,
     CreateArticleView,
     ArticleUpdateView,
-    article_delete_view
+    ArticleDeleteView,
 )
 
 from article.views.comments import ArticleCommentCreate
