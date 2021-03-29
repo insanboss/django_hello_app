@@ -13,10 +13,6 @@ class ArticleForm(forms.ModelForm):
         fields = ('title', 'content', 'author', 'tags')
 
 
-class ArticleDeleteForm(forms.Form):
-    title = forms.CharField(max_length=120, required=True, label='Введите название статьи, чтобы удалить её')
-
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
