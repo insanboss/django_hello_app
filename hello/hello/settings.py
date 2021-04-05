@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'article',
+    'accounts',
 
     # Lib apps
 ]
