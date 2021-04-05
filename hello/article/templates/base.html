@@ -13,6 +13,12 @@
         <ul class="menu">
             <li><a href="{% url "article-list" %}">Все статьи</a></li>
             {% block menu %}{% endblock %}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Войти</a></li>
+            {% endif %}
+
         </ul>
     </nav>
 
