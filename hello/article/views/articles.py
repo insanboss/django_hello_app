@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     CreateView,
@@ -28,6 +29,7 @@ class IndexView(ListView):
     paginate_orphans = 1
 
     def get(self, request, **kwargs):
+        print(request.user.is_authenticated)
         self.form = SearchForm(request.GET)
         self.search_data = self.get_search_data()
         return super(IndexView, self).get(request, **kwargs)
@@ -63,7 +65,7 @@ class ArticleView(DetailView):
     template_name = 'articles/view.html'
 
 
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView):
     template_name = 'articles/create.html'
     form_class = ArticleForm
     model = Article
@@ -81,7 +83,7 @@ class CreateArticleView(CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ArticleForm
     model = Article
     template_name = 'articles/update.html'
@@ -91,7 +93,7 @@ class ArticleUpdateView(UpdateView):
         return reverse('article-view', kwargs={'pk': self.kwargs.get('pk')})
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = 'articles/delete.html'
     context_object_name = 'article'
