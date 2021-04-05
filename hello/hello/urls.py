@@ -18,11 +18,12 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 
-HOMEPAGE_URL = 'articles/'  # константа для хранения домашней страницы. на данную страницу будет произведён редирект, когда пользователь зайдёт по пути /
+HOMEPAGE_URL = 'articles/'
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('articles/', include('article.urls')),  # подключаем URLs из приложения article
-    path('', RedirectView.as_view(url=HOMEPAGE_URL, permanent=True)),  # перенаправляем на страницу просмотра списка статей
+    path('articles/', include('article.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('', RedirectView.as_view(url=HOMEPAGE_URL, permanent=True)),
 ]
