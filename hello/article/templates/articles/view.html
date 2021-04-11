@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block menu %}
-    <li><a href="{% url "article-add" %}">Создать статью</a></li>
-    <li><a href="{% url "article-update" article.id %}">Редактировать статью</a></li>
-    <li><a href="{% url "article-delete" article.id %}">Удалить статью</a></li>
-    <li><a href="{% url "article-commnet-create" article.id %}">Добавить Комментарий</a></li>
+    <li><a href="{% url "article:add" %}">Создать статью</a></li>
+    <li><a href="{% url "article:update" article.id %}">Редактировать статью</a></li>
+    <li><a href="{% url "article:delete" article.id %}">Удалить статью</a></li>
+    <li><a href="{% url "article:comment-create" article.id %}">Добавить Комментарий</a></li>
 {% endblock menu %}
 
 {% block page_header %}Статья {{ article.id }}{% endblock page_header %}

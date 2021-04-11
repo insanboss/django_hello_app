@@ -12,7 +12,7 @@ class ArticleCommentCreate(CreateView):
 
     def get_success_url(self):
         return reverse(
-            'article-view',
+            'article:view',
             kwargs={'pk': self.kwargs.get('pk')}
         )
     

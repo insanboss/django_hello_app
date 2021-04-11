@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block menu %}<li><a href="{% url "article-add" %}">Создать статью</a></li>{% endblock menu %}
+{% block menu %}<li><a href="{% url "article:add" %}">Создать статью</a></li>{% endblock menu %}
 
 {% block title %}Все статьи{% endblock title %}
 
@@ -16,7 +16,7 @@
     {% for article in articles %}  {# Перебираем список статей циклом #}
         {# Создаём абзац, в котором отображем автора статьи и заголовок статьи, обёрнутый в ссылку, #}
         {# которая ведёт на страницу статьи #}
-        <p>{{ article.author }}: <a href="{% url "article-view" article.id %}">{{ article.title }}</a></p>
+        <p>{{ article.author }}: <a href="{% url "article:view" article.id %}">{{ article.title }}</a></p>
     {% endfor %}
     {% include 'partial/paginate.html' %}
 {% endblock content %}

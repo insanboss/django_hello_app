@@ -29,7 +29,6 @@ class IndexView(ListView):
     paginate_orphans = 1
 
     def get(self, request, **kwargs):
-        print(request.user.is_authenticated)
         self.form = SearchForm(request.GET)
         self.search_data = self.get_search_data()
         return super(IndexView, self).get(request, **kwargs)
@@ -69,7 +68,7 @@ class CreateArticleView(LoginRequiredMixin, CreateView):
     template_name = 'articles/create.html'
     form_class = ArticleForm
     model = Article
-    success_url = reverse_lazy('article-list')
+    success_url = reverse_lazy('article:list')
 
     def form_valid(self, form):
         tags = form.cleaned_data.pop('tags')
@@ -90,11 +89,11 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'article'
 
     def get_success_url(self):
-        return reverse('article-view', kwargs={'pk': self.kwargs.get('pk')})
+        return reverse('article:view', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = 'articles/delete.html'
     context_object_name = 'article'
-    success_url = reverse_lazy('article-list')
+    success_url = reverse_lazy('article:list')
