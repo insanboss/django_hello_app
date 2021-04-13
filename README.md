@@ -35,14 +35,19 @@ pip install -r requirements.txt
 ./manage.py loaddata fixtures/tags.json
 ```
 
-Загрузите фикстурные статьи командой
+Загрузите группы командой
 ```bash
-./manage.py loaddata fixtures/articles.json
+./manage.py loaddata fixtures/groups.json
 ```
 
 Загрузите пользователей командой
 ```bash
 ./manage.py loaddata fixtures/users.json
+```
+
+Загрузите фикстурные статьи командой
+```bash
+./manage.py loaddata fixtures/articles.json
 ```
 
 Чтобы запустить сервер выполните:
@@ -54,3 +59,6 @@ pip install -r requirements.txt
 Для доступа в панель администратора перейдите по ссылке http://localhost:8000/admin
 
 Username для администратора из фикстур: `admin`, пароль: `admin`
+Username для автора из фикстур: `author`, пароль: `author`
+Username для модератора из фикстур: `moderator`, пароль: `moderator`
+Username для пользователя из фикстур: `user`, пароль: `user`
