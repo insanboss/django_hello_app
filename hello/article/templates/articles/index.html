@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
-{% block menu %}<li><a href="{% url "article:add" %}">Создать статью</a></li>{% endblock menu %}
+{% block menu %}
+    {% if perms.article.add_article %}
+        <li><a href="{% url "article:add" %}">Создать статью</a></li>
+    {% endif %}
+{% endblock menu %}
 
 {% block title %}Все статьи{% endblock title %}
 

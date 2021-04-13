@@ -1,10 +1,21 @@
 {% extends "base.html" %}
 
 {% block menu %}
-    <li><a href="{% url "article:add" %}">Создать статью</a></li>
-    <li><a href="{% url "article:update" article.id %}">Редактировать статью</a></li>
-    <li><a href="{% url "article:delete" article.id %}">Удалить статью</a></li>
-    <li><a href="{% url "article:comment-create" article.id %}">Добавить Комментарий</a></li>
+    {% if perms.article.add_article %}
+        <li><a href="{% url "article:add" %}">Создать статью</a></li>
+    {% endif %}
+
+    {% if perms.article.change_article %}
+        <li><a href="{% url "article:update" article.id %}">Редактировать статью</a></li>
+    {% endif %}
+
+    {% if perms.article.delete_article %}
+        <li><a href="{% url "article:delete" article.id %}">Удалить статью</a></li>
+    {% endif %}
+
+    {% if perms.article.add_comment %}
+        <li><a href="{% url "article:comment-create" article.id %}">Добавить Комментарий</a></li>
+    {% endif %}
 {% endblock menu %}
 
 {% block page_header %}Статья {{ article.id }}{% endblock page_header %}
