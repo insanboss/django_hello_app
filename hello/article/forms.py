@@ -10,13 +10,13 @@ class ArticleForm(forms.ModelForm):
     """
     class Meta:
         model = Article
-        fields = ('title', 'content', 'author', 'tags')
+        fields = ('title', 'content', 'tags')
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('author', 'comment')
+        fields = ('comment',)
 
 
 class SearchForm(forms.Form):

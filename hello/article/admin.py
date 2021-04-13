@@ -9,7 +9,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ['author', 'tags']
     search_fields = ['title', 'content', 'tags']
     fields = ['id', 'title', 'author', 'tags', 'content', 'created_at', 'updated_at']
-    readonly_fields = ['created_at', 'updated_at', 'id']
+    readonly_fields = ['created_at', 'updated_at', 'id', 'author']
 
 
 class TagAdmin(admin.ModelAdmin):

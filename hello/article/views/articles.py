@@ -1,4 +1,6 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 from django.views.generic import (
     ListView,
     CreateView,
@@ -64,36 +66,42 @@ class ArticleView(DetailView):
     template_name = 'articles/view.html'
 
 
-class CreateArticleView(LoginRequiredMixin, CreateView):
+class CreateArticleView(PermissionRequiredMixin, CreateView):
     template_name = 'articles/create.html'
     form_class = ArticleForm
     model = Article
     success_url = reverse_lazy('article:list')
+    permission_required = 'article.add_article'
 
     def form_valid(self, form):
         tags = form.cleaned_data.pop('tags')
-        article = Article()
-        for key, value in form.cleaned_data.items():
-            setattr(article, key, value)
 
+        article = form.save(commit=False)
+        article.author = self.request.user
         article.save()
+
         article.tags.set(tags)
+        return redirect(self.get_success_url())
 
-        return super().form_valid(form)
 
-
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = ArticleForm
     model = Article
     template_name = 'articles/update.html'
     context_object_name = 'article'
+    permission_required = 'article.change_article'
+
+    def has_permission(self):
+        return self.get_object().author == self.request.user or super().has_permission()
 
     def get_success_url(self):
         return reverse('article:view', kwargs={'pk': self.kwargs.get('pk')})
 
 
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
     model = Article
     template_name = 'articles/delete.html'
     context_object_name = 'article'
     success_url = reverse_lazy('article:list')
+    permission_required = 'article.delete_article'
+

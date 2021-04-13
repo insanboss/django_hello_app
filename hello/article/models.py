@@ -1,5 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.conf import settings
 
 
 class BaseModel(models.Model):
@@ -19,7 +21,12 @@ class Article(BaseModel):
         validators=(MinLengthValidator(5),)
     )
     content = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Контент')
-    author = models.CharField(max_length=150, null=False, blank=False, default='Anon', verbose_name='Автор')
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='articles'
+    )
     tags = models.ManyToManyField(
         'article.Tag',
         related_name='articles',
@@ -30,6 +37,9 @@ class Article(BaseModel):
         db_table = 'articles'
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+        permissions = [
+            ('сan_have_piece_of_pizza', 'Может съесть кусочек пиццы')
+        ]
 
     def __str__(self):
         return f'{self.id}. {self.author}: {self.title}'
@@ -45,7 +55,12 @@ class Comment(BaseModel):
         blank=False
     )
     comment = models.CharField(max_length=200, verbose_name='Комментарий', null=False, blank=False)
-    author = models.CharField(max_length=150, null=False, blank=False, verbose_name='Автор')
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='comments'
+    )
 
     class Meta:
         db_table = 'comments'
