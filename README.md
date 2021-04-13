@@ -58,7 +58,11 @@ pip install -r requirements.txt
 
 Для доступа в панель администратора перейдите по ссылке http://localhost:8000/admin
 
+
 Username для администратора из фикстур: `admin`, пароль: `admin`
+
 Username для автора из фикстур: `author`, пароль: `author`
+
 Username для модератора из фикстур: `moderator`, пароль: `moderator`
+
 Username для пользователя из фикстур: `user`, пароль: `user`
