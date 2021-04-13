@@ -1,25 +1,13 @@
+{% extends "base.html" %}
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% block page_header %}Войти{% endblock %}
+{% block content %}
 
-{% if has_error %}
-    <div>Неправильный логин или пароль</div>
-{% endif %}
+    {% if has_error %}
+        <p class="form-error">Неправильный логин или пароль</p>
+    {% endif %}
 
-<form action="" method="POST">
-    {% csrf_token %}
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit">
-</form>
-
-</body>
-</html>
+    <form action="" method="POST">
+        {% include "partial/form.html" with button_text="Войти" %}
+    </form>
+{% endblock content %}

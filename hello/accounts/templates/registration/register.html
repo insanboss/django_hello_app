@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="" method="POST">
-    {% include "partial/form.html" with button_text="Зарегистрироваться" %}
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% include "partial/form.html" with button_text="Зарегистрироваться" %}
+    </form>
+{% endblock content %}
