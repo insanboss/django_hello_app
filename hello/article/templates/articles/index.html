@@ -17,10 +17,6 @@
         {% include "partial/search_form.html" %}
     {% endif %}
 
-    {% for article in articles %}  {# Перебираем список статей циклом #}
-        {# Создаём абзац, в котором отображем автора статьи и заголовок статьи, обёрнутый в ссылку, #}
-        {# которая ведёт на страницу статьи #}
-        <p>{{ article.author }}: <a href="{% url "article:view" article.id %}">{{ article.title }}</a></p>
-    {% endfor %}
-    {% include 'partial/paginate.html' %}
+   {% include 'partial/article_list.html' %}
+
 {% endblock content %}
