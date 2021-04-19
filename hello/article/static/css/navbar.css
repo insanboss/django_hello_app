@@ -26,7 +26,7 @@
     color: inherit;
     padding: 5px 15px;
 }
-.menu a:hover {
+.menu>a:hover {
     color: #ffc122;
     text-decoration: underline;
 }
