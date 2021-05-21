@@ -197,3 +197,5 @@ class UserChangePasswordView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('accounts:user-detail', kwargs={'pk': self.object.pk})
+
+

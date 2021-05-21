@@ -81,3 +81,28 @@ class Tag(BaseModel):
     
     def __str__(self):
         return self.tag
+
+
+class ArticleUser(BaseModel):
+    article = models.ForeignKey("article.Article", on_delete=models.CASCADE, related_name="ArticleUser")
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="ArticleUser")
+
+    class Meta:
+        verbose_name = 'Оценка(статья)'
+        verbose_name_plural = 'Оценки(статья)'
+
+    def __str__(self):
+        return "{}. {}".format(self.article, self.user)
+
+
+class CommentUser(BaseModel):
+    comment = models.ForeignKey("article.Comment", on_delete=models.CASCADE, related_name="CommentUser")
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="CommentUser")
+
+    class Meta:
+        verbose_name = 'Оценка(коммент)'
+        verbose_name_plural = 'Оценки(коммент)'
+
+    def __str__(self):
+        return "{}. {}".format(self.comment, self.user)
+

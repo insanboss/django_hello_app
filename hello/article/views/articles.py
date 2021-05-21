@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -12,7 +12,7 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.utils.http import urlencode
 
-from article.models import Article
+from article.models import Article, ArticleUser, CommentUser
 from article.forms import ArticleForm, SearchForm
 
 
@@ -54,6 +54,11 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_form'] = self.form
+        user = self.request.user
+        articles_id = []
+        for article_id in ArticleUser.objects.filter(user=user):
+            articles_id.append(article_id.article.pk)
+        context['likes_articles'] = articles_id
 
         if self.search_data:
             context['query'] = urlencode({'search_value': self.search_data})
@@ -64,6 +69,21 @@ class IndexView(ListView):
 class ArticleView(DetailView):
     model = Article
     template_name = 'articles/view.html'
+    context_object_name = 'article'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        articles_id = []
+        for article_id in ArticleUser.objects.filter(user=user):
+            articles_id.append(article_id.article.pk)
+        context['likes_articles'] = articles_id
+        comments_id = []
+        for comment_id in CommentUser.objects.filter(user=user):
+            comments_id.append(comment_id.comment.pk)
+        context['likes_comments'] = comments_id
+
+        return context
 
 
 class CreateArticleView(PermissionRequiredMixin, CreateView):
