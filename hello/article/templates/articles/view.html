@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block menu %}
+    {% if perms.article.add_article %}
+        <li><a href="{% url "article:add" %}">Создать статью</a></li>
+    {% endif %}
+
+    {% if perms.article.change_article %}
+        <li><a href="{% url "article:update" article.id %}">Редактировать статью</a></li>
+    {% endif %}
+
+    {% if perms.article.delete_article %}
+        <li><a href="{% url "article:delete" article.id %}">Удалить статью</a></li>
+    {% endif %}
+
+    {% if perms.article.add_comment %}
+        <li><a href="{% url "article:comment-create" article.id %}">Добавить Комментарий</a></li>
+    {% endif %}
+{% endblock menu %}
+
+{% block page_header %}Статья {{ article.id }}{% endblock page_header %}
+
+{% block content %}
+    <p>Title: {{ article.title }}</p>
+    <p>Author: {{ article.author }}</p>
+    <p>Content: {{ article.content }}</p>
+    <p>Tags: {% for tag in article.tags.all %}{{ tag.tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    {{ article.ArticleUser.all }}
+    {% if article.pk in likes_articles %}
+        <p><a data-counter="counter{{ article.pk }}" onclick="articleUnlike(event)" href="{% url "article:unlike_article" article.id %}"><i class="fas fa-heart"></i></a></p>
+    {% else %}
+        <p><a data-counter="counter{{ article.pk }}" onclick="articleLike(event)" href="{% url "article:like_article"  article.id %}"><i class="far fa-heart"></i></a></p>
+    {% endif %}
+    <p id="counter{{ article.pk }}">{{ article.ArticleUser.count }}</p>
+    <h2>Comments:</h2>
+    {% for comment in article.comments.all %}
+        <p>{{ comment.author }}: {{ comment.comment }}</p>
+
+    {% if comment.pk in likes_comments %}
+        <p><a data-counter_comment="counter_comment{{ comment.pk }}" onclick="commentUnlike(event)" href="{% url "article:unlike_comment" comment.id %}"><i class="fas fa-heart"></i></a></p>
+    {% else %}
+        <p><a data-counter_comment="counter_comment{{ comment.pk }}" onclick="commentLike(event)" href="{% url "article:like_comment"  comment.id %}"><i class="far fa-heart"></i></a></p>
+    {% endif %}
+    <p id="counter_comment{{ comment.pk }}">{{ comment.CommentUser.count }}</p>
+    {% empty %}
+        <p>Нет комментариев :(</p>
+    {% endfor %}
+
+
+    <script>
+
+        async function makeRequest(url, method='GET') {
+        let response = await fetch(url, {method});
+            if (response.ok) {  // нормальный ответ
+                let resp = await response.json();
+            return resp
+            }
+            else {            // ошибка
+            let error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+            }
+        }
+
+        articleLike = async (event)=>{
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try{
+                 let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="fas fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('like_article', "unlike_article"))
+                currentTarget.onclick = articleUnlike
+                let id = currentTarget.dataset.counter
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error){
+                console.log(error);
+            }
+        }
+
+        articleUnlike = async (event) => {
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try {
+                let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="far fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('unlike_article', 'like_article'))
+                currentTarget.onclick = articleLike
+                let id = currentTarget.dataset.counter
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        commentLike = async (event) => {
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try{
+                 let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="fas fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('like_comment', "unlike_comment"))
+                currentTarget.onclick = commentUnlike
+                let id = currentTarget.dataset.counter_comment
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error){
+                console.log(error);
+            }
+        }
+
+        commentUnlike = async (event) => {
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try {
+                let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="far fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('unlike_comment', 'like_comment'))
+                currentTarget.onclick = commentLike
+                let id = currentTarget.dataset.counter_comment
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        if (!!window.performance && window.performance.navigation.type === 2) {
+            // value 2 means "The page was accessed by navigating into the history"
+            console.log('Reloading');
+            window.location.reload(); // reload whole page
+
+        }
+
+    </script>
+
+
+{% endblock content %}

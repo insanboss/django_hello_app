@@ -1,0 +1,92 @@
+
+{% if is_paginated %}
+    {% include 'partial/paginate.html' %}
+{% endif %}
+
+
+{% for article in articles %}
+    <div class="box">
+        <h3><a href="{% url "article:view" article.pk %}">{{ article.title }}</a></h3>
+
+        {% if article.pk in likes_articles %}
+            <p><a data-counter="counter{{ article.pk }}" onclick="articleUnlike(event)" href="{% url "article:unlike_article" article.id %}"><i class="fas fa-heart"></i></a></p>
+        {% else %}
+            <p><a data-counter="counter{{ article.pk }}" onclick="articleLike(event)" href="{% url "article:like_article"  article.id %}"><i class="far fa-heart"></i></a></p>
+        {% endif %}
+        <p id="counter{{ article.pk }}">{{ article.ArticleUser.count }}</p>
+
+        <p>
+            <label for="selected_articles-{{ article.pk }}">Select:</label>
+
+            <input type="checkbox" name="selected_articles"
+
+                   id="selected_articles-{{ article.pk }}" value="{{ article.pk }}">
+        </p>
+
+        <p>
+            <a href="{% url 'accounts:user-detail' article.author_id %}">{{ article.author }}</a>
+            | {{ article.created_at|date:"d.m.Y H:i:s" }}
+        </p>
+    </div>
+
+{% empty %}
+    <h2 class="text-center">Нет статей</h2>
+{% endfor %}
+
+<script>
+
+    async function makeRequest(url, method='GET') {
+        let response = await fetch(url, {method});
+            if (response.ok) {  // нормальный ответ
+                let resp = await response.json();
+            return resp
+            }
+            else {            // ошибка
+            let error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+            }
+        }
+
+        articleLike = async (event)=>{
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try{
+                 let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="fas fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('like_article', "unlike_article"))
+                currentTarget.onclick = articleUnlike
+                let id = currentTarget.dataset.counter
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error){
+                console.log(error);
+            }
+        }
+
+        articleUnlike = async (event) => {
+            event.preventDefault()
+            let currentTarget = event.currentTarget
+            let current_url = currentTarget.href
+            try {
+                let result = await makeRequest(current_url)
+                currentTarget.innerHTML = '<i class="far fa-heart"></i>'
+                currentTarget.setAttribute('href', current_url.replace('unlike_article', 'like_article'))
+                currentTarget.onclick = articleLike
+                let id = currentTarget.dataset.counter
+                let counter = document.getElementById(id)
+                counter.innerText = result
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+</script>
+
+
+{% if is_paginated %}
+     {% include 'partial/pagination.html' %}
+{% endif %}
