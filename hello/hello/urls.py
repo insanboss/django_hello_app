@@ -27,5 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include('article.urls')),  # подключаем URLs из приложения article
     path('accounts/', include('accounts.urls')),
+    path('api_v2/', include('api_v2.urls')),
     path('', RedirectView.as_view(url=HOMEPAGE_URL, permanent=True)),  # перенаправляем на страницу просмотра списка статей
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
